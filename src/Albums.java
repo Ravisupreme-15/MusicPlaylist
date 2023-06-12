@@ -54,8 +54,9 @@ public class Albums {
             return true;
           }
 
-          return false;
+
       }
+        return false;
     }
 
     public boolean addSong(String title, double duration){
@@ -77,13 +78,46 @@ public class Albums {
     }
 
 
-    public boolean  addToplaylist(String title, LinkedList<Song> palyList){
+    public boolean  addToplaylist(String title, LinkedList<Song> playList){
 
             if(findSong(title)){
+
+                for(Song s: songs){
+
+                    if(s.getTitle().equals(title)){
+
+                        playList.add(s);
+                        System.out.println(" Congrats! song is added to the playList");
+                        return true;
+                    }
+                }
+
 
 
             }
 
+            System.out.println("Sorry the "+ title + " is not present in the album");
+
             return false;
+    }
+
+
+    public boolean addToplaylist(int indx, LinkedList<Song> playList){
+
+
+          indx = indx-1;
+
+          if(indx>=0 && indx<=this.songs.size()){
+
+               playList.add(this.songs.get(indx));
+
+              System.out.println("Congrats! song is added to the playList");
+              return true;
+
+          }
+        System.out.println("Sorry the is not present in the album");
+
+        return false;
+
     }
 }
