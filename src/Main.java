@@ -1,3 +1,6 @@
+import com.sun.nio.sctp.SctpSocketOption;
+
+import java.sql.SQLOutput;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Scanner;
@@ -17,6 +20,7 @@ public class Main {
         albums1.addSong("cheliya cheliya",5.0);
         albums2.addSong("lux papa",3.5);
         albums2.addSong("jai balayya",4.0);
+
 
 
 
@@ -97,12 +101,14 @@ public class Main {
 
         if(!itr.hasNext()){
 
-            System.out.println("Your playlist is empy!");
+            System.out.println("Your playlist is empty!");
             return;
         }
 
+
         System.out.print("Now playing: ");
          System.out.println(itr.next());
+         boolean wasNext = true;
 
 
         printMenu();
@@ -119,6 +125,11 @@ public class Main {
             switch (option){
 
                 case 1:
+                    if(wasNext==false){
+
+                        itr.next();
+                        wasNext=true;
+                    }
                     if(itr.hasNext()){
 
                         System.out.println("Now playing");
@@ -130,9 +141,14 @@ public class Main {
                         break;
 
                 case 2:
+                    if(wasNext==true){
+
+                        itr.previous();
+                        wasNext = false;
+                    }
 
                     if(itr.hasPrevious()){
-                        System.out.println("Now playing");
+
                         System.out.println(itr.previous());
                     }
                     else{
@@ -143,6 +159,21 @@ public class Main {
 
 
                 case 3:
+                     if(wasNext==true){
+                         if(itr.hasPrevious()) {
+                                 System.out.println("Now playing");
+                                 System.out.println(itr.previous());
+                                 wasNext = false;
+                             }
+
+                     }
+                     else{
+                         if(itr.hasNext()) {
+                             System.out.println("Now playing");
+                             System.out.println(itr.next());
+                             wasNext = true;
+                         }
+                     }
                     break;
 
                 case 4:
@@ -151,6 +182,29 @@ public class Main {
                     break;
 
                 case 5:
+                     if(wasNext==true){
+
+                         if(itr.hasPrevious()){
+                             itr.previous();
+
+                             System.out.println("current song has been deleted");
+                             itr.remove();
+                             wasNext = false;
+
+                         }
+
+
+                     }
+                     else{
+
+                         if(itr.hasNext()) {
+                             itr.next();
+                             System.out.println("current song has been deleted");
+                             itr.remove();
+
+                             wasNext = true;
+                         }
+                     }
                     break;
 
                 case 6:
